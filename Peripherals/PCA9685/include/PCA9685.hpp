@@ -2,7 +2,7 @@
 
 #include <iostream>
 #include <cstdint>
-#include "../../I2C/include/I2C.hpp"
+#include "../../../Communication/I2C/include/I2C.hpp"
 
 #define MODE1 0x00
 #define PRE_SCALE 0xFE

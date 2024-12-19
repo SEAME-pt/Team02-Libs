@@ -1,7 +1,7 @@
 	
 #include "CAN.hpp"
 
-void init(const std::string& CANDevice)
+void CAN::init(const std::string& CANDevice)
 {
     this->_canFd     = open(CANDevice.c_str(), O_RDWR);
 
@@ -27,17 +27,46 @@ void init(const std::string& CANDevice)
         return -1;
     }
 }
-void sendByte(addr, )
+void CAN::sendInfo(addr, uint8_t *tx)
 {
-	uint8_t sendData = [CAN_READ, addr, 0];
-	int res = ioctl(fd, SPI_IOC_MESSAGE(1), &(sendData));
-	return int(res[2])
+
+    struct spi_ioc_transfer tr[1] = {
+    {
+        .tx_buf = (unsigned long)tx,
+        .len = len,
+        .delay_usecs = 10,
+    },
+    };
+    errno = 0;
+    ioctl(fd, SPI_IOC_MESSAGE(1), &(tr));
+    if (errno != 0)
+    {
+        // failed
+    }
 }
 
 
-uint8_t readByte(addr)
+uint8_t *CAN::readInfo(addr, uint8_t *tx)   
 {
-
+    struct spi_ioc_transfer tr[2] = {
+    {
+        .tx_buf = (unsigned long)tx,
+        .len = tx_len,
+        .delay_usecs = 10,
+    },
+    {
+        .rx_buf = (unsigned long)rx,
+        .len = rx_len,
+        .delay_usecs = 10,
+    },
+    };
+    errno = 0;
+    ioctl(fd, SPI_IOC_MESSAGE(2), &(tr));
+    if (errno != 0)
+    {
+        // failed
+    }
+    return rx;
 }
 	# print(f"Recebido: {res}")  # Verifica o que foi recebido
 
@@ -50,3 +79,8 @@ uint8_t readByte(addr)
 			senddata = senddata + data
 		# print(senddata)
 		self.SPI.writebytes(senddata) 
+
+
+
+
+

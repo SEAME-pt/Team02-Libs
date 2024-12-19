@@ -30,6 +30,7 @@
 #define SPI_BITS_PER_WORD 8          // 8 bits per word
 #define SPI_MODE SPI_MODE_0          // SPI Mode 0 (CPOL = 0, CPHA = 0)
 
+
 class CAN
 {
   private:

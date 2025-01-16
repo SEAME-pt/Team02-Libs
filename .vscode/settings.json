@@ -6,5 +6,8 @@
     },
     "clang-format.executable": "C:\\Program Files\\LLVM\\bin\\clang-format.exe",
     "C_Cpp.codeAnalysis.clangTidy.enabled": true,
-    "C_Cpp.codeAnalysis.clangTidy.path": "C:\\Program Files\\LLVM\\bin\\clang-tidy.exe"
+    "C_Cpp.codeAnalysis.clangTidy.path": "C:\\Program Files\\LLVM\\bin\\clang-tidy.exe",
+    "[json]": {
+        "editor.defaultFormatter": "vscode.json-language-features"
+    }
 }

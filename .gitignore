@@ -44,3 +44,7 @@ compile_commands.json
 CTestTestfile.cmake
 _deps
 CMakeUserPresets.json
+./Communication/CAN/build
+./Communication/I2C/build
+./Communication/SPI/build
+./build

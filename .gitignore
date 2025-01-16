@@ -47,3 +47,4 @@ CMakeUserPresets.json
 ./Communication/CAN/build
 ./Communication/I2C/build
 ./Communication/SPI/build
+./build

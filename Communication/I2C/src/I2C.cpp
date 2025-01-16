@@ -112,7 +112,7 @@ uint8_t I2C::readByte(uint8_t deviceAddress)
 
 void I2C::readRegister(uint8_t deviceAddress, uint8_t registerAddr, uint8_t *data)
 {
-
+    (void) deviceAddress;
     // if (ioctl(this->_i2cFd, I2C_SLAVE, deviceAddress) < 1)
     // {
     //     throw std::runtime_error("Failed to set I2C address");

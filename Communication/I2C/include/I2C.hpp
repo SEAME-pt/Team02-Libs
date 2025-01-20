@@ -17,8 +17,6 @@ class I2C
   public:
     I2C();
     ~I2C();
-    I2C(const I2C& originalI2C);
-    I2C& operator=(const I2C& originalI2C);
 
     int getFd();
 

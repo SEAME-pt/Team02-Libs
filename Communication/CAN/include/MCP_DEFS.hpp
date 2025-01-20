@@ -1,3 +1,10 @@
+ /**
+ * @file MCP_DEFS.hpp
+ * @brief Header file for MCP2515 CAN controller register definitions and commands.
+ *
+ * This file provides constants for registers, masks, and SPI commands used
+ * to configure and operate the MCP2515 CAN controller.
+ */
 
 #define SPI_PATH "/dev/spidev0.0"
 

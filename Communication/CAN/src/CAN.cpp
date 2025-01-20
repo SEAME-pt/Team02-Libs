@@ -129,7 +129,6 @@ void CAN::spiTransfer(uint8_t *tx_buffer, uint8_t *rx_buffer, size_t len)
         .cs_change = 0,   
         .tx_nbits = 0,  
         .rx_nbits = 0, 
-        .word_delay_usecs = 0,
         .pad = 0, 
     };
     if (ioctl(this->_canFd, SPI_IOC_MESSAGE(1), &tr) < 0) {

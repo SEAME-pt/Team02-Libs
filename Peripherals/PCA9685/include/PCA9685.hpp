@@ -24,8 +24,6 @@ class PCA9685
   public:
     PCA9685();
     ~PCA9685();
-    PCA9685(const PCA9685& originalPCA9685);
-    PCA9685& operator=(const PCA9685& originalPCA9685);
 
     void init(I2C* m_i2c, uint8_t deviceAddress);
     void setPWMFreq(float freq_hz);

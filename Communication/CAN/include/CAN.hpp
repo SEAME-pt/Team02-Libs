@@ -37,7 +37,8 @@ class CAN
 
     void writeRegister(uint8_t address, uint8_t value);
     uint8_t readRegister(uint8_t address);
-    uint *CAN::readMessage(uint8_t buffer, uint32_t &can_id);
+
+    uint8_t *readMessage(uint8_t buffer, uint32_t &can_id);
     void writeMessage(uint32_t addr, uint8_t *tx, size_t length);
 
     int checkReceive();

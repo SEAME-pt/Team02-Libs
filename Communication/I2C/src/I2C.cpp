@@ -7,26 +7,6 @@ I2C::~I2C()
     close(this->_i2cFd);
 }
 
-I2C::I2C(const I2C& originalAddress)
-{
-    this->_i2cFd     = originalAddress._i2cFd;
-    this->_i2cDevice = originalAddress._i2cDevice;
-}
-
-I2C& I2C::operator=(const I2C& originalAddress)
-{
-    if (this != &originalAddress)
-    {
-        this->_i2cFd     = originalAddress._i2cFd;
-        this->_i2cDevice = originalAddress._i2cDevice;
-    }
-    else
-    {
-        // nothing
-    }
-    return *this;
-}
-
 int I2C::getFd()
 {
     return _i2cFd;

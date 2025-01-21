@@ -11,7 +11,6 @@ include_directories(include)
 
 add_subdirectory(Communication/I2C)
 add_subdirectory(Peripherals/INA219)
-add_subdirectory(Communication/SPI)
 add_subdirectory(Communication/CAN)
 add_subdirectory(Peripherals/PCA9685)
 
@@ -19,7 +18,6 @@ file(GLOB_RECURSE SOURCES
     ./Communication/I2C/*.cpp
     ./Peripherals/INA219/*.cpp
     ./Communication/CAN/*.cpp
-    ./Communication/SPI/*.cpp
     ./Peripherals/PCA9685/*.cpp
 )
 
@@ -29,7 +27,6 @@ target_include_directories(Libs PUBLIC
     Communication/I2C
     Peripherals/INA219
     Communication/CAN
-    Communication/SPI
     Peripherals/PCA9685
 )
 

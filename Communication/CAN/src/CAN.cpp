@@ -148,7 +148,7 @@ uint8_t CAN::readRegister(uint8_t address) {
     return rx_buffer[2];
 }
 
-void CAN::readMessage(uint8_t buffer) {
+uint *CAN::readMessage(uint8_t buffer, uint32_t &can_id) {
     //(void) buffer;
     uint8_t address = (buffer == 0) ? RXB0SIDH : RXB1SIDH;
 
@@ -159,7 +159,6 @@ void CAN::readMessage(uint8_t buffer) {
     uint8_t sidh = this->readRegister(RXB0SIDH);
     uint8_t sidl = this->readRegister(RXB0SIDL);
 
-    uint32_t can_id;
     if (sidl & 0x08) { // Extended ID frame (IDE bit set)
         can_id = ((sidh << 3) | (sidl >> 5)) & 0x7FF;
         can_id = (can_id << 18) | ((sidl & 0x03) << 16) | (rx_buffer[3] << 8) | rx_buffer[4];
@@ -189,6 +188,7 @@ void CAN::readMessage(uint8_t buffer) {
 	this->writeRegister(CANINTE,0x01);
 	this->writeRegister(RXB0SIDH,0x00);
 	this->writeRegister(RXB0SIDL,0x60);
+    return (data);
 }
 
 void CAN::writeMessage(uint32_t addr, uint8_t *tx, size_t length)

@@ -169,7 +169,6 @@ void CAN::readMessage(uint8_t buffer, uint32_t &can_id, uint8_t *data) {
     uint8_t data_length = this->readRegister(RXB0DLC);
 
     //Extract data bytes
-    uint8_t data[8];
     for (int i = 0; i < data_length; i++) {
         data[i] = rx_buffer[6 + i];
     }
@@ -188,7 +187,6 @@ void CAN::readMessage(uint8_t buffer, uint32_t &can_id, uint8_t *data) {
 	this->writeRegister(CANINTE,0x01);
 	this->writeRegister(RXB0SIDH,0x00);
 	this->writeRegister(RXB0SIDL,0x60);
-    return (data);
 }
 
 void CAN::writeMessage(uint32_t addr, uint8_t *tx, size_t length)

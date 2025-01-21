@@ -148,7 +148,7 @@ uint8_t CAN::readRegister(uint8_t address) {
     return rx_buffer[2];
 }
 
-uint *CAN::readMessage(uint8_t buffer, uint32_t &can_id) {
+uint8_t *CAN::readMessage(uint8_t buffer, uint32_t &can_id) {
     //(void) buffer;
     uint8_t address = (buffer == 0) ? RXB0SIDH : RXB1SIDH;
 

@@ -1,4 +1,3 @@
-
 #include <SPI.h>          
 #include <mcp_can.h>
 
@@ -14,7 +13,13 @@ const int pulsesPerRevolution = 20; // Pulses per wheel revolution
 
 unsigned long pulseCount = 0;
 unsigned long previousMillis = 0;
-const long interval = 500;  
+const long interval = 500;
+
+float alpha = 0.1; // Smoothing factor (0 < alpha <= 1)
+float smoothedSpeed = 0;
+unsigned long prev_time = 0;
+unsigned long curr_time = 0;
+unsigned long time_passed = 0;
 
 float circumference = PI * wheelDiameter;
 float units = (METRIC) ? 1000.000 : 1609.344;
@@ -22,6 +27,17 @@ float units = (METRIC) ? 1000.000 : 1609.344;
 void countPulse() {
 
   pulseCount++;
+
+}
+
+void countTime() {
+  prev_time = curr_time;
+  if (pulseCount == 25)
+  {
+      curr_time = micros();
+      time_passed = curr_time - prev_time;
+      pulseCount = 0;
+  }
 
 }
 
@@ -39,21 +55,18 @@ void setup()
   CAN.setMode(MCP_NORMAL);
 
   pinMode(sensorPin, INPUT);
-  attachInterrupt(digitalPinToInterrupt(sensorPin), countPulse, FALLING); 
+  //attachInterrupt(digitalPinToInterrupt(sensorPin), countPulse, FALLING); 
+  attachInterrupt(digitalPinToInterrupt(sensorPin), countTime, FALLING); 
 }
 
 void loop()
 {
-  static int count = 0;                  
-  static unsigned long previousMillis = 0;
-  unsigned long currentMillis = millis();
 
 
-
-  if (currentMillis - previousMillis >= interval) { 
-    previousMillis = currentMillis;
-    
-    float rps = (float)pulseCount/ (interval / 1000.0); // RPS = Pulses / seconds
+  	delay(100);
+    float rps = (float)(1 / time_passed) * 1000000.0;
+    smoothedSpeed = alpha * rps + (1 - alpha) * smoothedSpeed;
+    rps = smoothedSpeed;
     float rpm = rps * 60; // Convert to RPM
 
     int speed = (int) rpm;
@@ -85,21 +98,5 @@ void loop()
       Serial.print(", ");
     }
       Serial.println("");
-
-
-
-
-    //byte sndStat = 
     CAN.sendMsgBuf(0x1, 0, 8, data);
-    CAN.sendMsgBuf(0x2, 0, 8, data);
-    // if (sndStat == CAN_OK) {
-    //   Serial.println("Message Sent Successfully!");
-    // } else {
-    //   Serial.println("Error Sending Message...");
-    // }
-
-    count++;
-  }
 }
-
-

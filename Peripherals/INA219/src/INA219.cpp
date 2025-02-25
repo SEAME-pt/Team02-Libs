@@ -39,7 +39,7 @@ double INA219::readVoltage(uint8_t registerAddr)
     uint16_t rawVoltage = (buf[0] << 8) | buf[1];
     rawVoltage >>= 3;
     double busVoltage = rawVoltage * 0.004;
-    std::cout << busVoltage << std::endl;
+    // std::cout << busVoltage << std::endl;
 
     return busVoltage;
 }

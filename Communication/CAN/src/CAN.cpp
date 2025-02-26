@@ -160,9 +160,8 @@ uint8_t CAN::readMessage(uint8_t buffer, uint32_t &can_id, uint8_t *data) {
     uint8_t sidl = this->readRegister(RXB0SIDL);
     //uint8_t sidh = rx_buffer[1];
     //uint8_t sidl = rx_buffer[2];
-    printf("SIDH: 0x%02X, SIDL: 0x%02X\n", sidh, sidl);
+    // printf("SIDH: 0x%02X, SIDL: 0x%02X\n", sidh, sidl);
     if (sidl & 0x08) { // Extended ID frame (IDE bit set)
-        printf("Extended ID frame\n");
         can_id = ((sidh << 3) | (sidl >> 5)) & 0x3FF;
         can_id = (can_id << 18) | ((sidl & 0x03) << 16) | (rx_buffer[3] << 8) | rx_buffer[4];
     } else { // Standard ID frame
@@ -179,11 +178,11 @@ uint8_t CAN::readMessage(uint8_t buffer, uint32_t &can_id, uint8_t *data) {
     //Print the received message
     // if( data_length == 6 && data[0] == 6)
     // {
-        printf("Received CAN ID: 0x%03X, Length: %d, Data: ", can_id, data_length);
-        for (int i = 0; i < data_length; i++) {
-            printf("0x%02X ", data[i]);
-        }
-        printf("\n");
+        //printf("Received CAN ID: 0x%03X, Length: %d, Data: ", can_id, data_length);
+        // for (int i = 0; i < data_length; i++) {
+        //     printf("0x%02X ", data[i]);
+        // }
+        // printf("\n");
     // }
 
     this->writeRegister(CANINTF, 0);

@@ -160,7 +160,7 @@ uint8_t CAN::readMessage(uint8_t buffer, uint32_t &can_id, uint8_t *data) {
     uint8_t sidl = this->readRegister(RXB0SIDL);
     //uint8_t sidh = rx_buffer[1];
     //uint8_t sidl = rx_buffer[2];
-
+    printf("SIDH: 0x%02X, SIDL: 0x%02X\n", sidh, sidl);
     if (sidl & 0x08) { // Extended ID frame (IDE bit set)
         printf("Extended ID frame\n");
         can_id = ((sidh << 3) | (sidl >> 5)) & 0x7FF;

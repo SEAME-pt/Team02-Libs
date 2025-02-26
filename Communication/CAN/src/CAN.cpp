@@ -148,7 +148,7 @@ uint8_t CAN::readRegister(uint8_t address) {
     return rx_buffer[2];
 }
 
-void CAN::readMessage(uint8_t buffer, uint32_t &can_id, uint8_t *data) {
+uint8_t CAN::readMessage(uint8_t buffer, uint32_t &can_id, uint8_t *data) {
     //(void) buffer;
     uint8_t address = (buffer == 0) ? RXB0SIDH : RXB1SIDH;
 
@@ -189,6 +189,7 @@ void CAN::readMessage(uint8_t buffer, uint32_t &can_id, uint8_t *data) {
 	this->writeRegister(CANINTE, 0x01);
 	// this->writeRegister(RXB0SIDH,0x00);
 	// this->writeRegister(RXB0SIDL,0x60);
+    return (data_length);
 }   
 
 void CAN::writeMessage(uint32_t addr, uint8_t *tx, size_t length)

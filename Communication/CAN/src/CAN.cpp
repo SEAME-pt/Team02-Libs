@@ -156,8 +156,10 @@ void CAN::readMessage(uint8_t buffer, uint32_t &can_id, uint8_t *data) {
     uint8_t rx_buffer[40] = {0};
     this->spiTransfer(tx_buffer, rx_buffer, 13);
 
-    uint8_t sidh = this->readRegister(RXB0SIDH);
-    uint8_t sidl = this->readRegister(RXB0SIDL);
+    // uint8_t sidh = this->readRegister(RXB0SIDH);
+    // uint8_t sidl = this->readRegister(RXB0SIDL);
+    uint8_t sidh = rx_buffer[1];
+    uint8_t sidl = rx_buffer[2];
 
     if (sidl & 0x08) { // Extended ID frame (IDE bit set)
         can_id = ((sidh << 3) | (sidl >> 5)) & 0x7FF;
@@ -166,7 +168,8 @@ void CAN::readMessage(uint8_t buffer, uint32_t &can_id, uint8_t *data) {
         can_id = (sidh << 3) | (sidl >> 5);
     }
 
-    uint8_t data_length = this->readRegister(RXB0DLC);
+    // uint8_t data_length = this->readRegister(RXB0DLC);
+    uint8_t data_length = rx_buffer[5] & 0x0F;
 
     //Extract data bytes
     for (int i = 0; i < data_length; i++) {
@@ -183,7 +186,7 @@ void CAN::readMessage(uint8_t buffer, uint32_t &can_id, uint8_t *data) {
     // }
 
     this->writeRegister(CANINTF, 0);
-	this->writeRegister(CANINTE, 0x00);
+	this->writeRegister(CANINTE, 0x01);
 	// this->writeRegister(RXB0SIDH,0x00);
 	// this->writeRegister(RXB0SIDL,0x60);
 }   

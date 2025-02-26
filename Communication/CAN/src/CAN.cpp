@@ -219,7 +219,7 @@ void CAN::writeMessage(uint32_t addr, uint8_t *tx, size_t length)
 
 
 
-int CAN::checkReceive() {
+int CAN::checktheReceive() {
     uint8_t canintf = this->readRegister(CANINTF);
     if (canintf & RX0IF) return 0; // RXB0 has data
     if (canintf & RX1IF) return 1; // RXB1 has data

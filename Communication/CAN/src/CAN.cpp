@@ -187,7 +187,7 @@ void CAN::readMessage(uint8_t buffer, uint32_t &can_id, uint8_t *data) {
 	this->writeRegister(CANINTE,0x01);
 	// this->writeRegister(RXB0SIDH,0x00);
 	// this->writeRegister(RXB0SIDL,0x60);
-}
+}   
 
 void CAN::writeMessage(uint32_t addr, uint8_t *tx, size_t length)
 {

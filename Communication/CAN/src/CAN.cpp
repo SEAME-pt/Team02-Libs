@@ -153,7 +153,7 @@ void CAN::readMessage(uint8_t buffer, uint32_t &can_id, uint8_t *data) {
     uint8_t address = (buffer == 0) ? RXB0SIDH : RXB1SIDH;
 
     uint8_t tx_buffer[13] = {CAN_READ, address};
-    uint8_t rx_buffer[40] = {0};
+    uint8_t rx_buffer[13] = {0};
     this->spiTransfer(tx_buffer, rx_buffer, 13);
 
     // uint8_t sidh = this->readRegister(RXB0SIDH);

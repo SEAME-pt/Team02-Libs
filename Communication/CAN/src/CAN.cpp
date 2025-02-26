@@ -175,7 +175,7 @@ uint8_t CAN::readMessage(uint8_t buffer, uint32_t &can_id, uint8_t *data) {
     for (int i = 0; i < data_length; i++) {
         data[i] = rx_buffer[6 + i];
     }
-    Print the received message
+    //Print the received message
     if( data_length == 6 && data[0] == 6)
     {
         printf("Received CAN ID: 0x%03X, Length: %d, Data: ", can_id, data_length);
@@ -186,7 +186,7 @@ uint8_t CAN::readMessage(uint8_t buffer, uint32_t &can_id, uint8_t *data) {
     }
 
     this->writeRegister(CANINTF, 0);
-	this->writeRegister(CANINTE, 0x00);
+	this->writeRegister(CANINTE, 0x01);
 	this->writeRegister(RXB0SIDH,0x00);
 	this->writeRegister(RXB0SIDL,0x60);
     return (data_length);

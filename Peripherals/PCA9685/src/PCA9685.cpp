@@ -11,9 +11,9 @@ PCA9685::~PCA9685()
     _i2c->writeByte(_deviceAddress, ALL_LED_OFF_H, 0x10);
 }
 
-void PCA9685::init(I2C* m_i2c, uint8_t deviceAddress)
+void PCA9685::init(std::shared_ptr<I2C> i2c, uint8_t deviceAddress)
 {
-    this->_i2c           = m_i2c;
+    this->_i2c           = i2c;
     this->_deviceAddress = deviceAddress;
     _i2c->writeByte(_deviceAddress, MODE1, 0x00);
     _i2c->writeByte(_deviceAddress, ALL_LED_ON_L, 0x00);

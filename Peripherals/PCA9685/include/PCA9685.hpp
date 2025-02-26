@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include <cstdint>
+#include <memory>
 #include "../../../Communication/I2C/include/I2C.hpp"
 
 #define MODE1 0x00
@@ -19,13 +20,13 @@ class PCA9685
 {
   private:
     int _deviceAddress;
-    I2C* _i2c;
+    std::shared_ptr<I2C> _i2c;
 
   public:
     PCA9685();
     ~PCA9685();
 
-    void init(I2C* m_i2c, uint8_t deviceAddress);
+    void init(std::shared_ptr<I2C> i2c, uint8_t deviceAddress);
     void setPWMFreq(float freq_hz);
     void setPWM(uint8_t channel, uint16_t on, uint16_t off);
     void setDutyCicle(uint8_t channel, uint16_t pulseWidth);

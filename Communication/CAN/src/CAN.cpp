@@ -157,9 +157,9 @@ void CAN::readMessage(uint8_t buffer, uint32_t &can_id, uint8_t *data) {
     this->spiTransfer(tx_buffer, rx_buffer, 13);
 
     // uint8_t sidh = this->readRegister(RXB0SIDH);
-    // uint8_t sidl = this->readRegister(RXB0SIDL);
+    uint8_t sidl = this->readRegister(RXB0SIDL);
     uint8_t sidh = rx_buffer[1];
-    uint8_t sidl = rx_buffer[2];
+    //uint8_t sidl = rx_buffer[2];
 
     if (sidl & 0x08) { // Extended ID frame (IDE bit set)
         can_id = ((sidh << 3) | (sidl >> 5)) & 0x7FF;

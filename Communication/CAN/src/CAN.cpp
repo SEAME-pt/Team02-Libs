@@ -188,7 +188,9 @@ uint8_t CAN::readMessage(uint8_t buffer, uint32_t &can_id, uint8_t *data) {
     // }
 
     this->writeRegister(CANINTF, 0);
-	// this->writeRegister(CANINTE, 0x01);
+	this->writeRegister(CANINTE, 0x01);
+
+    this->WriteByte(CANCTRL, REQOP_NORMAL|CLKOUT_ENABLED)
 	// this->writeRegister(RXB0SIDH,0x00);
 	// this->writeRegister(RXB0SIDL,0x60);
     return (data_length);

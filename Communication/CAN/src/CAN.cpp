@@ -171,7 +171,7 @@ uint8_t CAN::readMessage(uint8_t buffer, uint32_t &can_id, uint8_t *data) {
     }
 
     // uint8_t data_length = this->readRegister(RXB0DLC);
-    uint8_t data_length = rx_buffer[5] & 0x0F;
+    uint8_t data_length = rx_buffer[5];
 
     //Extract data bytes
     for (int i = 0; i < data_length; i++) {

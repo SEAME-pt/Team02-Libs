@@ -165,7 +165,7 @@ uint8_t CAN::readMessage(uint8_t buffer, uint32_t &can_id, uint8_t *data) {
         can_id = ((sidh << 3) | (sidl >> 5)) & 0x7FF;
         can_id = (can_id << 18) | ((sidl & 0x03) << 16) | (rx_buffer[3] << 8) | rx_buffer[4];
     } else { // Standard ID frame
-        can_id = (sidh << 3) | (sidl >> 5) & 0x7FF;
+        can_id = ((sidh << 3) | (sidl >> 5)) & 0x7FF;
     }
 
     // uint8_t data_length = this->readRegister(RXB0DLC);

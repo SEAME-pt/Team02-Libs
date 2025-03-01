@@ -86,14 +86,14 @@ void CAN::setMasksFilters()
 void CAN::configureRxBuffers()
 {
     this->writeRegister(RXB0SIDH, 0x00);
-	this->writeRegister(RXB0SIDL, 0x60);
-	this->writeRegister(RXB0CTRL, 0x60);
-	this->writeRegister(RXB0DLC, DLC_8);
+	this->writeRegister(RXB0SIDL, 0x00);
+	this->writeRegister(RXB0CTRL, 0x40);
+	// this->writeRegister(RXB0DLC, DLC_8);
 
-	this->writeRegister(RXF0SIDH,0xFF);
-	this->writeRegister(RXF0SIDL,0xE0);
-	this->writeRegister(RXM0SIDH,0xFF);
-	this->writeRegister(RXM0SIDL,0xE0);
+	// this->writeRegister(RXF0SIDH,0xFF);
+	// this->writeRegister(RXF0SIDL,0xE0);
+	this->writeRegister(RXM0SIDH,0x00);
+	this->writeRegister(RXM0SIDL,0x00);
 }
 
 void CAN::configureTxBuffers()
@@ -108,7 +108,8 @@ void CAN::setNormalMode()
     this->writeRegister(CANINTF,0x00); //clean interrupt flag
 	this->writeRegister(CANINTE,0x01); //Receive Buffer 0 Full Interrupt Enable Bit
 
-    this->writeRegister(CANCTRL, REQOP_NORMAL| CLKOUT_ENABLED); // Set CANCTRL to normal mode
+    // this->writeRegister(CANCTRL, REQOP_NORMAL| CLKOUT_ENABLED); // Set CANCTRL to normal mode
+    this->writeRegister(CANCTRL, 0x00); // Set CANCTRL to normal mode
     uint8_t mode = this->readRegister(CANCTRL);
     printf("CANCTRL Mode: 0x%02X\n", mode);
 }

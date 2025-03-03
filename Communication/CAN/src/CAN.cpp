@@ -88,10 +88,10 @@ void CAN::configureRxBuffers()
     this->writeRegister(RXB0SIDH, 0x00);
 	this->writeRegister(RXB0SIDL, 0x00);
 	this->writeRegister(RXB0CTRL, 0x40);
-	// this->writeRegister(RXB0DLC, DLC_8);
+	this->writeRegister(RXB0DLC, DLC_8);
 
-	// this->writeRegister(RXF0SIDH,0xFF);
-	// this->writeRegister(RXF0SIDL,0xE0);
+	this->writeRegister(RXF0SIDH,0xFF);
+	this->writeRegister(RXF0SIDL,0xE0);
 	this->writeRegister(RXM0SIDH,0x00);
 	this->writeRegister(RXM0SIDL,0x00);
 }

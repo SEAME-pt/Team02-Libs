@@ -1,0 +1,30 @@
+
+module(
+    name = "team02_libs",
+    version = "0.1",
+)
+
+bazel_dep(name = "rules_cc", version = "0.0.17")
+
+http_archive = use_repo_rule("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
+http_archive(
+    name = "catch2",
+    urls = ["https://github.com/catchorg/Catch2/archive/v2.13.7.tar.gz"],
+    strip_prefix = "Catch2-2.13.7",
+    build_file_content = """
+cc_library(
+    name = "catch2",
+    hdrs = glob(["single_include/catch2/*.hpp"]),
+    includes = ["single_include"],
+    visibility = ["//visibility:public"],
+)
+    """,
+)
+
+
+# Disable hermetic Python interpreter
+bazel_dep(name = "rules_python", version = "1.2.0")
+
+python = use_extension("@rules_python//python/extensions:python.bzl", "python")
+
+python.toolchain(python_version = "3.12", is_default = True)

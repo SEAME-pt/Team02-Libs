@@ -1,0 +1,44 @@
+module(
+    name = "team02_libs",
+    version = "0.1",
+)
+
+bazel_dep(name = "rules_cc", version = "0.0.1")
+
+# Add Catch2 as a dependency using Bzlmod
+bazel_dep(name = "catch2", version = "2.13.7")
+
+use_extension(
+    "@catch2//:defs.bzl",
+    "catch2",
+)
+
+use_repo(catch2 = "@catch2//:catch2")
+
+
+
+
+
+
+module(
+    name = "team02_libs",
+    version = "0.1",
+)
+
+bazel_dep(name = "rules_cc", version = "0.0.1")
+
+
+
+# Add Catch2 as a dependency
+http_archive = use_repo_rule("@bazel_tools//tools/build_defs/repo:http.bzl", "http_file")
+http_archive(
+    name = "catch2",
+    urls = ["https://github.com/catchorg/Catch2/archive/v2.13.7.tar.gz"],
+
+    cc_library(
+        name = "catch",
+        hdrs = glob(["single_include/catch2/*.hpp"]),
+        includes = ["single_include"],
+        visibility = ["//visibility:public"],
+    ),
+)

@@ -8,7 +8,7 @@
 
 //CAN-SPI register values and defines
 #include "MCP_DEFS.hpp"
-
+#include <cstdint>
 
 class CAN
 {

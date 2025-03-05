@@ -15,10 +15,10 @@ add_subdirectory(Communication/CAN)
 add_subdirectory(Peripherals/PCA9685)
 
 file(GLOB_RECURSE SOURCES
-    ./Communication/I2C/*.cpp
-    ./Peripherals/INA219/*.cpp
-    ./Communication/CAN/*.cpp
-    ./Peripherals/PCA9685/*.cpp
+    ./Communication/I2C/src/*.cpp
+    ./Peripherals/INA219/src/*.cpp
+    ./Communication/CAN/src/*.cpp
+    ./Peripherals/PCA9685/src/*.cpp
 )
 
 add_library(Libs STATIC ${SOURCES})

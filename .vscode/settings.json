@@ -9,5 +9,8 @@
     "C_Cpp.codeAnalysis.clangTidy.path": "C:\\Program Files\\LLVM\\bin\\clang-tidy.exe",
     "[json]": {
         "editor.defaultFormatter": "vscode.json-language-features"
+    },
+    "files.associations": {
+        "new": "cpp"
     }
 }

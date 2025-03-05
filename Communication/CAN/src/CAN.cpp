@@ -23,19 +23,24 @@ CAN& CAN::operator=(const CAN& originalCAN)
 
 void CAN::init(const std::string& CANDevice)
 {
-    this->_canFd = open(CANDevice.c_str(), O_RDWR);
-
-    this->_txBuffer = 0;
-
-    this->setSPI();
-    this->reset();
-    this->setBaudRate();
-    this->setMasksFilters();
-    this->configureRxBuffers();
-    this->configureTxBuffers();
-    this->setNormalMode();
-
-    printf("Listening for CAN messages...\n");
+    try{
+        this->_canFd = open(CANDevice.c_str(), O_RDWR);
+    
+        this->_txBuffer = 0;
+    
+        this->setSPI();
+        this->reset();
+        this->setBaudRate();
+        this->setMasksFilters();
+        this->configureRxBuffers();
+        this->configureTxBuffers();
+        this->setNormalMode();
+    
+        printf("Listening for CAN messages...\n");
+    }
+    catch(const std::exception& e){
+        std::cerr << e.what() << std::endl;
+    }
 }
 
 void CAN::setSPI()
@@ -45,19 +50,19 @@ void CAN::setSPI()
     uint32_t speed = 10000000; // 10 MHz;
 
     if (ioctl(this->_canFd, SPI_IOC_WR_MODE, &mode) < 0 || ioctl(this->_canFd, SPI_IOC_RD_MODE, &mode) < 0) {
-        std::cerr << "Failed to set SPI mode." << std::endl;
+        throw std::runtime_error("Failed to set SPI mode.");
         close(this->_canFd);
         return;
     }
 
     if (ioctl(this->_canFd, SPI_IOC_WR_BITS_PER_WORD, &bits) < 0 || ioctl(this->_canFd, SPI_IOC_RD_BITS_PER_WORD, &bits) < 0) {
-        std::cerr << "Failed to set bits per word." << std::endl;
+        throw std::runtime_error("Failed to set SPI mode.");
         close(this->_canFd);
         return;
     }
 
     if (ioctl(this->_canFd, SPI_IOC_WR_MAX_SPEED_HZ, &speed) < 0 || ioctl(this->_canFd, SPI_IOC_RD_MAX_SPEED_HZ, &speed) < 0) {
-        std::cerr << "Failed to set max speed." << std::endl;
+        throw std::runtime_error("Failed to set SPI mode.");
         close(this->_canFd);
         return;
     }
@@ -135,6 +140,7 @@ void CAN::spiTransfer(uint8_t *tx_buffer, uint8_t *rx_buffer, size_t len)
         .pad = 0, 
     };
     if (ioctl(this->_canFd, SPI_IOC_MESSAGE(1), &tr) < 0) {
+        throw std::runtime_error("SPI transfer failed.");
         perror("SPI transfer failed");
     }
 }

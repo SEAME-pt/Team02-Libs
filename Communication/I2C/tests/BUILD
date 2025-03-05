@@ -5,4 +5,5 @@ cc_test (
         "//Communication/I2C:I2C",
         "@catch2//:catch2",
     ],
+    visibility = ["//visibility:public"],
 )

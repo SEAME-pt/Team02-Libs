@@ -9,7 +9,7 @@
             "name": "PlatformIO",
             "includePath": [
                 "/home/masoares/libs/Peripherals/Arduino/SpeedSensor/src",
-                "/root/Team02-Libs/.pio/libdeps/uno/mcp_can",
+                "/home/bazeluser/Team02-Libs/.pio/libdeps/uno/mcp_can",
                 "/root/.platformio/packages/framework-arduino-avr/libraries/SPI/src",
                 "/root/.platformio/packages/framework-arduino-avr/cores/arduino",
                 "/root/.platformio/packages/framework-arduino-avr/variants/standard",
@@ -23,7 +23,7 @@
                 "limitSymbolsToIncludedHeaders": true,
                 "path": [
                     "/home/masoares/libs/Peripherals/Arduino/SpeedSensor/src",
-                    "/root/Team02-Libs/.pio/libdeps/uno/mcp_can",
+                    "/home/bazeluser/Team02-Libs/.pio/libdeps/uno/mcp_can",
                     "/root/.platformio/packages/framework-arduino-avr/libraries/SPI/src",
                     "/root/.platformio/packages/framework-arduino-avr/cores/arduino",
                     "/root/.platformio/packages/framework-arduino-avr/variants/standard",

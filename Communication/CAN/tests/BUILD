@@ -5,4 +5,5 @@ cc_test (
         "//Communication/CAN:CAN",
         "@catch2//:catch2",
     ],
+    visibility = ["//visibility:public"],
 )

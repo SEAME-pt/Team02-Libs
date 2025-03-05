@@ -1,0 +1,37 @@
+FROM ruipires99/jetsoncrosscompile:latest
+
+
+RUN apt-get update && apt-get install -y \
+    curl \
+    unzip \
+    gnupg \
+    build-essential \
+    python3 \
+    git \
+    openjdk-11-jdk \
+    g++ \
+    zip
+    
+# Install Bazelisk
+RUN curl -Lo /usr/local/bin/bazel https://github.com/bazelbuild/bazelisk/releases/download/v1.15.0/bazelisk-linux-arm64 \
+    && chmod +x /usr/local/bin/bazel
+
+ARG projectDir
+
+RUN rm -rf /home/$projectDir
+
+RUN mkdir -p /home/$projectDir
+
+COPY . /home/$projectDir
+
+RUN chown -R root:root /home/$projectDir && chmod -R 755 /home/$projectDir
+
+RUN cd /home/$projectDir && \
+    bazel --batch build --cpu=arm64 //... && \
+    mkdir -p /home/$projectDir/package && \
+    cp -r /home/$projectDir/bazel-bin /home/$projectDir/package && \
+    cp -r /home/$projectDir/bazel-out /home/$projectDir/package && \
+    cp -r /home/$projectDir/bazel-testlogs /home/$projectDir/package
+
+#CMD ["tail", "-f", "/dev/null"]
+# RUN cp -r /home/$projectDir/bazel-team02_libs /home/$projectDir/package

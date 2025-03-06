@@ -1,5 +1,14 @@
 #include "../include/I2C.hpp"
 
+#ifdef TEST_MODE
+  // Define custom function names for testing
+  #define open custom_open
+  #define close custom_close
+  #define ioctl custom_ioctl
+  #define read custom_read
+  #define write custom_write
+#endif
+
 I2C::I2C() {}
 
 I2C::~I2C()
@@ -66,27 +75,6 @@ void I2C::writeMessage(uint8_t deviceAddress, uint8_t *buffer)
     else
     {
         // nothing
-    }
-}
-
-uint8_t I2C::readByte(uint8_t deviceAddress)
-{
-    if (ioctl(this->_i2cFd, I2C_SLAVE, deviceAddress) < 1)
-    {
-        throw std::runtime_error("Failed to set I2C address");
-    }
-    else
-    {
-        // nothing
-    }
-    uint8_t value;
-    if (read(this->_i2cFd, &value, 1) != 1)
-    {
-        throw std::runtime_error("Failed to read to the I2C device");
-    }
-    else
-    {
-        return value;
     }
 }
 

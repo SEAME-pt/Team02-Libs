@@ -33,7 +33,7 @@ if [ "$architecture" = "arm64" ] || [ "$architecture" = "aarch64" ]; then
         -t final-app .
 else
     echo "Building for non-ARM64 architecture with platform emulation..."
-    docker buildx build -f ./tests/DockerfileDeployTests \
+    docker buildx build --no-cache -f ./tests/DockerfileDeployTests \
         --platform linux/arm64 --load \
         --build-arg projectDir=/$projectDir \
         -t final-app .
@@ -43,10 +43,7 @@ docker rm -f tmpapp
 docker create --name tmpapp final-app
 
 docker start tmpapp
-# docker exec tmpapp bash -c "apt-get install -y lcov && cd /home/$projectDir && bazel coverage --test_output=all --combined_report=lcov //... && genhtml -o coverage_report bazel-out/_coverage/_coverage_report.dat"
-
-
-# echo "Copy the coverage report from tmp container"
-# mkdir -p coverage_report
-# docker cp tmpapp:/home/$projectDir/coverage_report/. ./coverage_report
+echo "Copy the coverage report from tmp container"
+mkdir -p coverage_report
+docker cp tmpapp:/home/$projectDir/coverage_report/. ./coverage_report
 

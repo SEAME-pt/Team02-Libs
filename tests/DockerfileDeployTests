@@ -10,7 +10,8 @@ RUN apt-get update && apt-get install -y \
     git \
     openjdk-11-jdk \
     g++ \
-    zip
+    zip \
+    lcov
     
 # Install Bazelisk
 RUN curl -Lo /usr/local/bin/bazel https://github.com/bazelbuild/bazelisk/releases/download/v1.15.0/bazelisk-linux-arm64 \
@@ -24,10 +25,14 @@ RUN mkdir -p /home/$projectDir
 
 COPY . /home/$projectDir
 
-RUN chown -R root:root /home/$projectDir && chmod -R 755 /home/$projectDir
+RUN useradd -ms /bin/bash nonrootuser && echo "nonrootuser:password" | chpasswd && adduser nonrootuser sudo
 
-RUN cd /home/$projectDir && \
-    bazel --batch build --cpu=arm64 //...
+RUN chown -R nonrootuser:nonrootuser /home/$projectDir
 
-CMD ["tail", "-f", "/dev/null"]
+USER nonrootuser
+
+RUN cd /home/$projectDir && bazel --batch build --cpu=arm64 //...
+RUN bazel coverage --test_output=all --combined_report=lcov //... && genhtml -o coverage_report bazel-out/_coverage/_coverage_report.dat
+
+# CMD ["tail", "-f", "/dev/null"]
 # RUN cp -r /home/$projectDir/bazel-team02_libs /home/$projectDir/package

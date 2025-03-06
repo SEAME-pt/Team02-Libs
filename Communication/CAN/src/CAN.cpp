@@ -2,6 +2,15 @@
 #include "../include/CAN.hpp"
 #include <iomanip>
 
+#ifdef TEST_MODE
+  // Define custom function names for testing
+  #define open custom_open
+  #define close custom_close
+  #define ioctl custom_ioctl
+  #define read custom_read
+  #define write custom_write
+#endif
+
 CAN::CAN()
 {}
     

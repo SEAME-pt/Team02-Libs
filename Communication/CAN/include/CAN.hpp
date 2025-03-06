@@ -10,12 +10,6 @@
 #include <linux/spi/spidev.h>
 
 #ifdef TEST_MODE
-  // Undefine the standard library functions to avoid conflicts
-  #define open custom_open
-  #define close custom_close
-  #define ioctl custom_ioctl
-  #define read custom_read
-  #define write custom_write
   // Declare your custom functions
   extern "C" int custom_open(const char* path, int flags);
   extern "C" int custom_close(int fd);

@@ -2,22 +2,28 @@
 #include <iostream>
 #include <cstring>
 
-
-//CAN-SPI register values and defines
+// CAN-SPI register values and defines
 #include "MCP_DEFS.hpp"
 #include <cstdint>
+#include <fcntl.h>
+#include <unistd.h>
+#include <linux/spi/spidev.h>
 
 #ifdef TEST_MODE
-  extern "C" int open(const char* path, int flags);
-  extern "C" int close(int fd);
-  extern "C" int ioctl(int fd, unsigned long request, void* arg);
-  extern "C" ssize_t read(int fd, void* buf, size_t count);
-  extern "C" ssize_t write(int fd, const void* buf, size_t count);
+  // Undefine the standard library functions to avoid conflicts
+  #define open custom_open
+  #define close custom_close
+  #define ioctl custom_ioctl
+  #define read custom_read
+  #define write custom_write
+  // Declare your custom functions
+  extern "C" int custom_open(const char* path, int flags);
+  extern "C" int custom_close(int fd);
+  extern "C" int custom_ioctl(int fd, unsigned long request, void* arg);
+  extern "C" ssize_t custom_read(int fd, void* buf, size_t count);
+  extern "C" ssize_t custom_write(int fd, const void* buf, size_t count);
 #else
-# include <fcntl.h>
-# include <unistd.h>
-# include <linux/spi/spidev.h>
-# include <sys/ioctl.h>
+  #include <sys/ioctl.h>
 #endif
 
 class CAN

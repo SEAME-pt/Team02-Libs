@@ -6,6 +6,6 @@ cc_test (
         "@catch2//:catch2",
     ],
     visibility = ["//visibility:public"],
-    copts = ["-DTEST_MODE", "--coverage"],  # Add --coverage to enable coverage
-    linkopts = ["--coverage"],  # Add this line to enable coveragero
+    copts = ["--coverage"],  # Add this line to enable coverage
+    linkopts = ["--coverage"],  # Add this line to enable coverage
 )

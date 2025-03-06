@@ -4,7 +4,6 @@ project(I2C)
 
 add_library(I2C
     src/I2C.cpp
-    tests/can_tests.cpp
     tests/MockFunctions.cpp
 )
 

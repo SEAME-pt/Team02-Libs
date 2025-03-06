@@ -4,7 +4,6 @@ project(CAN)
 
 add_library(CAN
     src/CAN.cpp
-    tests/can_tests.cpp
     tests/MockFunctions.cpp
 )
 

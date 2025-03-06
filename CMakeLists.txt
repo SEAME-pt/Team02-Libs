@@ -7,8 +7,6 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 set(CMAKE_EXE_LINKER_FLAGS "-static")
 
-include_directories(include)
-
 add_subdirectory(Communication/I2C)
 add_subdirectory(Peripherals/INA219)
 add_subdirectory(Communication/CAN)

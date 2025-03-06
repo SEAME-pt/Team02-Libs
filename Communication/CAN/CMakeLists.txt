@@ -7,4 +7,6 @@ add_library(CAN
     tests/MockFunctions.cpp
 )
 
+target_compile_definitions(CAN PUBLIC TEST_MODE)
+
 target_include_directories(CAN PUBLIC include)

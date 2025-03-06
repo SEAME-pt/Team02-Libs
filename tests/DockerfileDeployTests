@@ -28,5 +28,6 @@ RUN chown -R root:root /home/$projectDir && chmod -R 755 /home/$projectDir
 
 RUN cd /home/$projectDir && \
     bazel --batch build --cpu=arm64 //...
-#CMD ["tail", "-f", "/dev/null"]
+
+CMD ["tail", "-f", "/dev/null"]
 # RUN cp -r /home/$projectDir/bazel-team02_libs /home/$projectDir/package

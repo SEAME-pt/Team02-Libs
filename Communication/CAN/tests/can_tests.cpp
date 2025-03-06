@@ -4,6 +4,9 @@
 #include "../include/CAN.hpp"
 #include <cstdint>
 
+extern void setMockData(const std::vector<uint8_t>& data);
+extern std::vector<uint8_t> getWrittenData();
+
 
 TEST_CASE("CAN initialization", "[can]") {
     CAN can;

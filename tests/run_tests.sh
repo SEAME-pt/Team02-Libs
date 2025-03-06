@@ -42,9 +42,11 @@ fi
 docker rm -f tmpapp
 docker create --name tmpapp final-app
 
-echo "Run Bazel coverage inside the container"
-docker start -i tmpapp bash -c "apt-get install lcov && cd /home/$projectDir && bazel coverage --test_output=all --combined_report=lcov //... && genhtml -o coverage_report bazel-out/_coverage/_coverage_report.dat"
+docker start tmpapp
+# docker exec tmpapp bash -c "apt-get install -y lcov && cd /home/$projectDir && bazel coverage --test_output=all --combined_report=lcov //... && genhtml -o coverage_report bazel-out/_coverage/_coverage_report.dat"
 
-echo "Copy the coverage report from tmp container"
-mkdir -p coverage_report
-docker cp tmpapp:/home/$projectDir/coverage_report/. ./coverage_report
+
+# echo "Copy the coverage report from tmp container"
+# mkdir -p coverage_report
+# docker cp tmpapp:/home/$projectDir/coverage_report/. ./coverage_report
+

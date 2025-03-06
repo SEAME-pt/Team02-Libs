@@ -1,14 +1,24 @@
 #pragma once
 #include <iostream>
 #include <cstring>
-#include <fcntl.h>
-#include <unistd.h>
-#include <linux/spi/spidev.h>
-#include <sys/ioctl.h>
+
 
 //CAN-SPI register values and defines
 #include "MCP_DEFS.hpp"
 #include <cstdint>
+
+#ifdef TEST_MODE
+  extern "C" int open(const char* path, int flags);
+  extern "C" int close(int fd);
+  extern "C" int ioctl(int fd, unsigned long request, void* arg);
+  extern "C" ssize_t read(int fd, void* buf, size_t count);
+  extern "C" ssize_t write(int fd, const void* buf, size_t count);
+#else
+# include <fcntl.h>
+# include <unistd.h>
+# include <linux/spi/spidev.h>
+# include <sys/ioctl.h>
+#endif
 
 class CAN
 {

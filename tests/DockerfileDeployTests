@@ -32,7 +32,7 @@ RUN chown -R nonrootuser:nonrootuser /home/$projectDir
 USER nonrootuser
 
 RUN cd /home/$projectDir && bazel --batch build --cpu=arm64 //...
-RUN bazel coverage --test_output=all --combined_report=lcov //... && genhtml -o coverage_report bazel-out/_coverage/_coverage_report.dat
+RUN cd /home/$projectDir && bazel coverage --batch --test_output=all --combined_report=lcov //... && genhtml -o coverage_report bazel-out/_coverage/_coverage_report.dat
 
 # CMD ["tail", "-f", "/dev/null"]
 # RUN cp -r /home/$projectDir/bazel-team02_libs /home/$projectDir/package

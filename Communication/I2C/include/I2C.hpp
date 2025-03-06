@@ -10,11 +10,11 @@
 
 #ifdef TEST_MODE
   // Declare your custom functions
-  extern "C" int custom_open(const char* path, int flags);
-  extern "C" int custom_close(int fd);
-  extern "C" int custom_ioctl(int fd, unsigned long request, uint8_t arg);
-  extern "C" ssize_t custom_read(int fd, void* buf, size_t count);
-  extern "C" ssize_t custom_write(int fd, const void* buf, size_t count);
+  extern "C" int custom_i2c_open(const char* path, int flags);
+  extern "C" int custom_i2c_close(int fd);
+  extern "C" int custom_i2c_ioctl(int fd, unsigned long request, uint8_t arg);
+  extern "C" ssize_t custom_i2c_read(int fd, void* buf, size_t count);
+  extern "C" ssize_t custom_i2c_write(int fd, const void* buf, size_t count);
 #endif
 
 

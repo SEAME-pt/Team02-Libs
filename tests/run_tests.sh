@@ -33,7 +33,7 @@ if [ "$architecture" = "arm64" ] || [ "$architecture" = "aarch64" ]; then
         -t final-app .
 else
     echo "Building for non-ARM64 architecture with platform emulation..."
-    docker buildx build --no-cache -f ./tests/DockerfileDeployTests \
+    docker buildx build -f ./tests/DockerfileDeployTests \
         --platform linux/arm64 --load \
         --build-arg projectDir=/$projectDir \
         -t final-app .

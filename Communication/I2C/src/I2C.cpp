@@ -2,11 +2,11 @@
 
 #ifdef TEST_MODE
   // Define custom function names for testing
-  #define open custom_open
-  #define close custom_close
-  #define ioctl custom_ioctl
-  #define read custom_read
-  #define write custom_write
+  #define open custom_i2c_open
+  #define close custom_i2c_close
+  #define ioctl custom_i2c_ioctl
+  #define read custom_i2c_read
+  #define write custom_i2c_write
 #endif
 
 I2C::I2C() {}

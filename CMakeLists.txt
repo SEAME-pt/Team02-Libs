@@ -24,10 +24,10 @@ file(GLOB_RECURSE SOURCES
 add_library(Libs STATIC ${SOURCES})
 
 target_include_directories(Libs PUBLIC
-    Communication/I2C
-    Peripherals/INA219
-    Communication/CAN
-    Peripherals/PCA9685
+    ${CMAKE_CURRENT_SOURCE_DIR}/Communication/I2C
+    ${CMAKE_CURRENT_SOURCE_DIR}/Peripherals/INA219
+    ${CMAKE_CURRENT_SOURCE_DIR}/Communication/CAN
+    ${CMAKE_CURRENT_SOURCE_DIR}/Peripherals/PCA9685
 )
 
 target_compile_options(Libs PRIVATE -Wall -Werror -Wextra)

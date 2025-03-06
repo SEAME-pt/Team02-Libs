@@ -11,6 +11,11 @@ set(CMAKE_EXE_LINKER_FLAGS "-static")
 
 include_directories(include)
 
+add_subdirectory(Communication/I2C)
+add_subdirectory(Peripherals/INA219)
+add_subdirectory(Communication/CAN)
+add_subdirectory(Peripherals/PCA9685)
+
 file(GLOB_RECURSE SOURCES
     ./Communication/I2C/src/*.cpp
     ./Peripherals/INA219/src/*.cpp

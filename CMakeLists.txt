@@ -32,8 +32,6 @@ target_include_directories(Libs PUBLIC
     Peripherals/PCA9685
 )
 
-if(LIBS_TEST_MODE)
-    target_compile_definitions(Libs PUBLIC TEST_MODE)
-endif()
+target_compile_definitions(Libs PUBLIC TEST_MODE)
 
 target_compile_options(Libs PRIVATE -Wall -Werror -Wextra)

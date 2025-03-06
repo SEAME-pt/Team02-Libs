@@ -4,6 +4,8 @@ project(I2C)
 
 add_library(I2C
     src/I2C.cpp
+    tests/can_tests.cpp
+    tests/MockFunctions.cpp
 )
 
 target_include_directories(I2C PUBLIC include)

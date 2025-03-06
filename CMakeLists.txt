@@ -2,6 +2,8 @@ cmake_minimum_required(VERSION 3.16)
 
 project(Libs VERSION 0.1)
 
+option(LIBS_TEST_MODE "Build libraries in test mode" OFF)
+
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
@@ -29,5 +31,9 @@ target_include_directories(Libs PUBLIC
     Communication/CAN
     Peripherals/PCA9685
 )
+
+if(LIBS_TEST_MODE)
+    target_compile_definitions(Libs PUBLIC TEST_MODE)
+endif()
 
 target_compile_options(Libs PRIVATE -Wall -Werror -Wextra)

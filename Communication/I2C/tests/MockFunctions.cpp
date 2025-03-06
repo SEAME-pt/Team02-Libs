@@ -40,10 +40,10 @@ extern "C" ssize_t custom_i2c_write(int fd, const void* buf, size_t count) {
     return count;
 }
 
-void setMockData(const std::vector<uint8_t>& data) {
+void custom_i2c_setMockData(const std::vector<uint8_t>& data) {
     mockData = data;
 }
 
-std::vector<uint8_t> getWrittenData() {
+std::vector<uint8_t> custom_i2c_getWrittenData() {
     return writtenData;
 }

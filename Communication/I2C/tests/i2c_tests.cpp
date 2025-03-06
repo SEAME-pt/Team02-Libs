@@ -5,8 +5,8 @@
 #include <cstdint>
 #include <stdexcept>
 
-extern void setMockData(const std::vector<uint8_t>& data);
-extern std::vector<uint8_t> getWrittenData();
+extern void custom_i2c_setMockData(const std::vector<uint8_t>& data);
+extern std::vector<uint8_t> custom_i2c_getWrittenData();
 
 TEST_CASE("I2C initialization", "[i2c]") {
     I2C i2c;

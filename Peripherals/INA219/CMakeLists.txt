@@ -4,6 +4,7 @@ project(INA219)
 
 add_library(INA219
     src/INA219.cpp
+    src/MockFunctions.cpp
 )
 
 target_include_directories(INA219 PUBLIC include)

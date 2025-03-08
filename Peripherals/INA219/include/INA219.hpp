@@ -6,6 +6,10 @@
 
 #define INA_ADDRESS 0x41
 
+#ifdef TEST_MODE
+  // Declare your custom functions
+    extern "C" int custom_i2c_ioctl(int fd, unsigned long request, uint8_t arg);
+#endif
 
 class INA219 {
 

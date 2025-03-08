@@ -1,8 +1,8 @@
 cc_test (
-    name = "i2c_tests",
-    srcs = ["i2c_tests.cpp"],
+    name = "pca9685_tests",
+    srcs = ["pca9685_tests.cpp"],
     deps = [
-        "//Communication/I2C:I2C",
+        "//Peripherals/PCA9685:PCA9685",
         "@catch2//:catch2",
     ],
     visibility = ["//visibility:public"],

@@ -4,7 +4,7 @@ project(I2C)
 
 add_library(I2C
     src/I2C.cpp
-    tests/MockFunctions.cpp
+    src/MockFunctions.cpp
 )
 
 target_compile_definitions(I2C PUBLIC TEST_MODE)

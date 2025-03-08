@@ -38,7 +38,7 @@ TEST_CASE("I2C readRegister", "[I2C]") {
     i2c.init("/dev/i2c-1");
 
     uint8_t data[2];
-    setMockData({0x34, 0x56});  // Set mock data to be read
+    custom_i2c_setMockData({0x34, 0x56});  // Set mock data to be read
 
     REQUIRE_NOTHROW(i2c.readRegister(0x50, 0x00, data));
     REQUIRE(data[0] == 0x34);

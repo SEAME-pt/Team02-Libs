@@ -1,5 +1,10 @@
 #include "../include/INA219.hpp"
 
+#ifdef TEST_MODE
+  // Define custom function names for testing
+  #define ioctl custom_i2c_ioctl
+#endif
+
 INA219::INA219()
 {
 

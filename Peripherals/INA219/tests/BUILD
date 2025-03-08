@@ -1,8 +1,8 @@
 cc_test (
-    name = "i2c_tests",
-    srcs = ["i2c_tests.cpp"],
+    name = "ina219_tests",
+    srcs = ["ina219_tests.cpp"],
     deps = [
-        "//Communication/I2C:I2C",
+        "//Peripherals/INA219:INA219",
         "@catch2//:catch2",
     ],
     visibility = ["//visibility:public"],

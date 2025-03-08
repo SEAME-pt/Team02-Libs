@@ -2,10 +2,10 @@
 
 ```sh
     sudo apt-get install lcov
-    bazel coverage --test_output=all --combined_report=lcov //Communication/I2C/tests:i2c_tests
+    bazel coverage --test_output=all --combined_report=lcov //...
     genhtml -o coverage_report bazel-out/_coverage/_coverage_report.dat
 ```
 
-can't ruin test coverage using root user
+can't run test coverage using root user
 
 open coverage_report/index.html

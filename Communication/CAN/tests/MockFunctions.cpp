@@ -9,7 +9,7 @@ static int mockFd = 1;
 
 extern "C" int custom_open(const char* path, int flags) {
     (void)path;
-    (void)fd;
+    (void)flags;
     return mockFd;
 }
 

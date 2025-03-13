@@ -18,7 +18,6 @@ extern "C" int custom_i2c_open(const char* path, int flags) {
 
 extern "C" int custom_i2c_close(int fd) {
     (void)fd;
-
     return 0;
 }
 

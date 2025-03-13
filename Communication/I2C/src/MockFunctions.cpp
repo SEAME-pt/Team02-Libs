@@ -12,7 +12,7 @@ static uint8_t mockI2CAddress = 0;
 
 extern "C" int custom_i2c_open(const char* path, int flags) {
     (void)path;
-    (void)fd;
+    (void)flags;
     return mockFd;
 }
 

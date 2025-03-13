@@ -11,14 +11,20 @@ static int mockFd = 1;
 static uint8_t mockI2CAddress = 0; 
 
 extern "C" int custom_i2c_open(const char* path, int flags) {
+    (void)path;
+    (void)fd;
     return mockFd;
 }
 
 extern "C" int custom_i2c_close(int fd) {
+    (void)fd;
+
     return 0;
 }
 
 extern "C" int custom_i2c_ioctl(int fd, unsigned long request, uint8_t arg) {
+    (void)fd;
+
     if (request == I2C_SLAVE) {
         mockI2CAddress = arg;
         return 0;
@@ -27,6 +33,8 @@ extern "C" int custom_i2c_ioctl(int fd, unsigned long request, uint8_t arg) {
 }
 
 extern "C" ssize_t custom_i2c_read(int fd, void* buf, size_t count) {
+    (void)fd;
+
     if (mockData.size() < count) {
         throw std::runtime_error("Not enough mock data available");
     }
@@ -36,6 +44,8 @@ extern "C" ssize_t custom_i2c_read(int fd, void* buf, size_t count) {
 }
 
 extern "C" ssize_t custom_i2c_write(int fd, const void* buf, size_t count) {
+    (void)fd;
+
     writtenData.insert(writtenData.end(), (uint8_t*)buf, (uint8_t*)buf + count);
     return count;
 }

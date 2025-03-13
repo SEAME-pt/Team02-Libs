@@ -10,6 +10,7 @@ static std::vector<uint8_t> writtenData;
 static uint8_t mockI2CAddress = 0; 
 
 extern "C" int custom_i2c_ioctl(int fd, unsigned long request, uint8_t arg) {
+    (void)fd;
     if (request == I2C_SLAVE) {
         mockI2CAddress = arg;
         return 0;

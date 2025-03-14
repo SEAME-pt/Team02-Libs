@@ -7,6 +7,6 @@ add_library(I2C
     src/MockFunctions.cpp
 )
 
-target_compile_definitions(I2C PUBLIC TEST_MODE)
+# target_compile_definitions(I2C PUBLIC TEST_MODE)
 
 target_include_directories(I2C PUBLIC include)

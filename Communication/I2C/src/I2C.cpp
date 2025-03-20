@@ -37,7 +37,6 @@ void I2C::init(const std::string& i2cDevice)
 
 void I2C::writeByte(uint8_t deviceAddress, uint8_t reg, uint8_t value)
 {
-    std::cout << "aqui" << std::endl;
     if (ioctl(this->_i2cFd, I2C_SLAVE, deviceAddress) < 0)
     {
         throw std::runtime_error("Failed to set I2C address");

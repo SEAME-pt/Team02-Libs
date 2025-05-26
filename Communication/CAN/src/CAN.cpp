@@ -242,12 +242,38 @@ void CAN::writeMessage(uint32_t addr, uint8_t *tx, size_t length)
 
 
 
+// int CAN::checktheReceive() {
+//     uint8_t canintf = this->readRegister(CANINTF);
+//     if (canintf & RX0IF) return 0; // RXB0 has data
+//     if (canintf & RX1IF) return 1; // RXB1 has data
+//     return -1; // No data
+// }
+
+
 int CAN::checktheReceive() {
     uint8_t canintf = this->readRegister(CANINTF);
-    if (canintf & RX0IF) return 0; // RXB0 has data
-    if (canintf & RX1IF) return 1; // RXB1 has data
-    return -1; // No data
+    
+    // Check if specific receive flags are set AND verify data is actually present
+    if (canintf & RX0IF) {
+        // Verify valid data by checking DLC register
+        uint8_t dlc = this->readRegister(RXB0DLC) & 0x0F; // Get data length
+        if (dlc > 0) {
+            return 0; // RXB0 has valid data
+        }
+    }
+    
+    if (canintf & RX1IF) {
+        // Similar check for RXB1
+        uint8_t dlc = this->readRegister(RXB1DLC) & 0x0F;
+        if (dlc > 0) {
+            return 1; // RXB1 has valid data
+        }
+    }
+    
+    // Clear spurious interrupt flags
+    this->writeRegister(CANINTF, 0);
+    
+    return -1; // No valid data
 }
-
 
 

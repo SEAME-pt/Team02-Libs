@@ -136,18 +136,19 @@ void CAN::reset() {
 
 void CAN::spiTransfer(uint8_t *tx_buffer, uint8_t *rx_buffer, size_t len)
 {
-    struct spi_ioc_transfer tr = {
-        .tx_buf = (unsigned long)tx_buffer,
-        .rx_buf = (unsigned long)rx_buffer,
-        .len = (__u32)len,        
-        .speed_hz = 10000000,     
-        .delay_usecs = 0,         
-        .bits_per_word = 8,     
-        .cs_change = 0,   
-        .tx_nbits = 0,  
-        .rx_nbits = 0, 
-        .pad = 0, 
-    };
+    struct spi_ioc_transfer tr;
+    memset(&tr, 0, sizeof(tr));  // Zero out the structure first
+    
+    tr.tx_buf = (unsigned long)tx_buffer;
+    tr.rx_buf = (unsigned long)rx_buffer;
+    tr.len = (__u32)len;
+    tr.speed_hz = 10000000;
+    tr.delay_usecs = 0;
+    tr.bits_per_word = 8;
+    tr.cs_change = 0;
+    tr.tx_nbits = 0;
+    tr.rx_nbits = 0;
+    tr.pad = 0;
     if (ioctl(this->_canFd, SPI_IOC_MESSAGE(1), &tr) < 0) {
         throw std::runtime_error("SPI transfer failed.");
         perror("SPI transfer failed");

@@ -192,7 +192,7 @@ uint8_t CAN::readMessage(uint8_t buffer, uint32_t &can_id, uint8_t *data) {
 
     //Extract data bytes
     for (int i = 0; i < data_length; i++) {
-        data[i] = rx_buffer[6 + i];
+        data[i] = rx_buffer[7 + i];
     }
     //Print the received message
     // if( data_length == 6 && data[0] == 6)

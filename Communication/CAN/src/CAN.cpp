@@ -79,11 +79,11 @@ void CAN::setSPI()
 
 void CAN::setBaudRate() {
     // Configuring for 500 kbps with 8 MHz oscillator
-    this->writeRegister(CNF1, CAN_250Kbps);
-    // this->writeRegister(CNF2, 0x91);
-    // this->writeRegister(CNF3, 0x01);
+    this->writeRegister(CNF1, CAN_500Kbps);
     this->writeRegister(CNF2, 0x91);
-    this->writeRegister(CNF3, 0x02);
+    this->writeRegister(CNF3, 0x01);
+    // this->writeRegister(CNF2, 0x91);
+    // this->writeRegister(CNF3, 0x02);
 
     // this->writeRegister(CNF2, 0x80|PHSEG1_3TQ|PRSEG_1TQ);
     // this->writeRegister(CNF3, PHSEG2_3TQ);

@@ -82,8 +82,8 @@ void CAN::setBaudRate() {
     this->writeRegister(CNF1, CAN_250Kbps);
     // this->writeRegister(CNF2, 0x91);
     // this->writeRegister(CNF3, 0x01);
-    this->writeRegister(CNF2, 0xB1);
-    this->writeRegister(CNF3, 0x05);
+    this->writeRegister(CNF2, 0x91);
+    this->writeRegister(CNF3, 0x02);
 
     // this->writeRegister(CNF2, 0x80|PHSEG1_3TQ|PRSEG_1TQ);
     // this->writeRegister(CNF3, PHSEG2_3TQ);
@@ -102,27 +102,15 @@ void CAN::setMasksFilters()
 
 void CAN::configureRxBuffers()
 {
-    // this->writeRegister(RXB0SIDH, 0x00);
-	// this->writeRegister(RXB0SIDL, 0x00);
-	// this->writeRegister(RXB0CTRL, 0x40);
-	// this->writeRegister(RXB0DLC, DLC_8);
+    this->writeRegister(RXB0SIDH, 0x00);
+	this->writeRegister(RXB0SIDL, 0x00);
+	this->writeRegister(RXB0CTRL, 0x40);
+	this->writeRegister(RXB0DLC, DLC_8);
 
-	// this->writeRegister(RXF0SIDH,0xFF);
-	// this->writeRegister(RXF0SIDL,0xE0);
-	// this->writeRegister(RXM0SIDH,0x00);
-	// this->writeRegister(RXM0SIDL,0x00);
-
-    this->writeRegister(RXB0CTRL, 0x60); // Changed from 0x40 to 0x60 - accept all messages
-    
-    // Set mask to 0x000 to accept all IDs
-    this->writeRegister(RXM0SIDH, 0x00);
-    this->writeRegister(RXM0SIDL, 0x00);
-    
-    // Set filter to 0x000 (doesn't matter with mask = 0)
-    this->writeRegister(RXF0SIDH, 0x00); // Changed from 0xFF
-    this->writeRegister(RXF0SIDL, 0x00); // Changed from 0xE0
-    
-    printf("RX Buffer configured to accept all messages\n");
+	this->writeRegister(RXF0SIDH,0xFF);
+	this->writeRegister(RXF0SIDL,0xE0);
+	this->writeRegister(RXM0SIDH,0x00);
+	this->writeRegister(RXM0SIDL,0x00);
 }
 
 void CAN::configureTxBuffers()

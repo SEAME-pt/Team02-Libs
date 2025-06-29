@@ -40,10 +40,7 @@ void CAN::init(const std::string& CANDevice)
         this->setSPI();
         this->reset();
 
-        // Enter config mode
-        this->writeRegister(CANCTRL, REQOP_CONFIG);
-        // Poll until CANSTAT shows CONFIG mode
-        while ((this->readRegister(CANSTAT) & MODE_MASK) != MODE_CONFIG) { /* wait */ }
+
         this->setBaudRate();
         this->setMasksFilters();
         this->configureRxBuffers();

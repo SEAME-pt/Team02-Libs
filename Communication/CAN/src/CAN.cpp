@@ -102,15 +102,27 @@ void CAN::setMasksFilters()
 
 void CAN::configureRxBuffers()
 {
-    this->writeRegister(RXB0SIDH, 0x00);
-	this->writeRegister(RXB0SIDL, 0x00);
-	this->writeRegister(RXB0CTRL, 0x40);
-	this->writeRegister(RXB0DLC, DLC_8);
+    // this->writeRegister(RXB0SIDH, 0x00);
+	// this->writeRegister(RXB0SIDL, 0x00);
+	// this->writeRegister(RXB0CTRL, 0x40);
+	// this->writeRegister(RXB0DLC, DLC_8);
 
-	this->writeRegister(RXF0SIDH,0xFF);
-	this->writeRegister(RXF0SIDL,0xE0);
-	this->writeRegister(RXM0SIDH,0x00);
-	this->writeRegister(RXM0SIDL,0x00);
+	// this->writeRegister(RXF0SIDH,0xFF);
+	// this->writeRegister(RXF0SIDL,0xE0);
+	// this->writeRegister(RXM0SIDH,0x00);
+	// this->writeRegister(RXM0SIDL,0x00);
+
+    this->writeRegister(RXB0CTRL, 0x60); // Changed from 0x40 to 0x60 - accept all messages
+    
+    // Set mask to 0x000 to accept all IDs
+    this->writeRegister(RXM0SIDH, 0x00);
+    this->writeRegister(RXM0SIDL, 0x00);
+    
+    // Set filter to 0x000 (doesn't matter with mask = 0)
+    this->writeRegister(RXF0SIDH, 0x00); // Changed from 0xFF
+    this->writeRegister(RXF0SIDL, 0x00); // Changed from 0xE0
+    
+    printf("RX Buffer configured to accept all messages\n");
 }
 
 void CAN::configureTxBuffers()

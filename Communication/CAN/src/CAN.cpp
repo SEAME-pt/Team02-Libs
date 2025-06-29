@@ -39,6 +39,11 @@ void CAN::init(const std::string& CANDevice)
     
         this->setSPI();
         this->reset();
+
+        // Enter config mode
+        this->writeRegister(CANCTRL, REQOP_CONFIG);
+        // Poll until CANSTAT shows CONFIG mode
+        while ((this->readRegister(CANSTAT) & MODE_MASK) != MODE_CONFIG) { /* wait */ }
         this->setBaudRate();
         this->setMasksFilters();
         this->configureRxBuffers();
@@ -107,8 +112,8 @@ void CAN::configureRxBuffers()
 	this->writeRegister(RXB0CTRL, 0x40);
 	this->writeRegister(RXB0DLC, DLC_8);
 
-	this->writeRegister(RXF0SIDH,0xFF);
-	this->writeRegister(RXF0SIDL,0xE0);
+	this->writeRegister(RXF0SIDH,0x00);
+	this->writeRegister(RXF0SIDL,0x00);
 	this->writeRegister(RXM0SIDH,0x00);
 	this->writeRegister(RXM0SIDL,0x00);
 }
@@ -117,7 +122,7 @@ void CAN::configureTxBuffers()
 {
     this->writeRegister(TXB0SIDH, 0xFF);
 	this->writeRegister(TXB0SIDL, 0xE0);
-	this->writeRegister(TXB0DLC, 0x40|DLC_8);
+	this->writeRegister(TXB0DLC, DLC_8);
 }
 
 void CAN::setNormalMode()

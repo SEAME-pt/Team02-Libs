@@ -51,6 +51,8 @@ class CAN
     uint8_t readMessage(uint8_t buffer, uint32_t &can_id, uint8_t *data);
     void writeMessage(uint32_t addr, uint8_t *tx, size_t length);
 
+    bool waitForMessage(int timeout_ms = -1); 
+
     int checktheReceive();
   
 };

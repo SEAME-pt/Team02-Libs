@@ -319,3 +319,24 @@ int CAN::checktheReceive() {
 }
 
 
+bool CAN::waitForMessage(int timeout_ms) {
+    const int POLL_INTERVAL_US = 100; // 100 microseconds
+    int totalWaitTime = 0;
+    
+    while (true) {
+        // Check if message is available
+        uint8_t canintf = this->readRegister(CANINTF);
+        if (canintf & (RX0IF | RX1IF)) {
+            return true; // Message available
+        }
+        
+        // If timeout is specified and we've exceeded it, return false
+        if (timeout_ms >= 0 && totalWaitTime >= (timeout_ms * 1000)) {
+            return false;
+        }
+        
+        // Brief sleep to avoid hammering the SPI bus
+        usleep(POLL_INTERVAL_US);
+        totalWaitTime += POLL_INTERVAL_US;
+    }
+}

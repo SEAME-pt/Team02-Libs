@@ -170,50 +170,88 @@ uint8_t CAN::readRegister(uint8_t address) {
     return rx_buffer[2];
 }
 
+// uint8_t CAN::readMessage(uint8_t buffer, uint32_t &can_id, uint8_t *data) {
+//     //(void) buffer;
+//     uint8_t address = (buffer == 0) ? RXB0SIDH : RXB1SIDH;
+
+//     uint8_t tx_buffer[13] = {CAN_READ, address};
+//     uint8_t rx_buffer[14] = {0};
+//     this->spiTransfer(tx_buffer, rx_buffer, 13);
+
+//     uint8_t sidh = this->readRegister(RXB0SIDH);
+//     uint8_t sidl = this->readRegister(RXB0SIDL);
+//     // uint8_t sidh = rx_buffer[1];
+//     // uint8_t sidl = rx_buffer[2];
+//     // printf("SIDH: 0x%02X, SIDL: 0x%02X\n", sidh, sidl);
+//     if (sidl & 0x08) { // Extended ID frame (IDE bit set)
+//         can_id = ((sidh << 3) | (sidl >> 5)) & 0x3FF;
+//         can_id = (can_id << 18) | ((sidl & 0x03) << 16) | (rx_buffer[3] << 8) | rx_buffer[4];
+//     } else { // Standard ID frame
+//         can_id = ((sidh << 3) | (sidl >> 5)) & 0x3FF;
+//     }
+
+//     // uint8_t data_length = this->readRegister(RXB0DLC);
+//     uint8_t data_length = rx_buffer[5];
+
+//     //Extract data bytes
+//     for (int i = 0; i < data_length; i++) {
+//         data[i] = rx_buffer[7 + i];
+//     }
+//     //Print the received message
+//     // if( data_length == 6 && data[0] == 6)
+//     // // {
+//         // printf("Received CAN ID: 0x%03X, Length: %d, Data: ", can_id, data_length);
+//         // for (int i = 0; i < data_length; i++) {
+//         //     printf("0x%02X ", data[i]);
+//         // }
+//         // printf("\n");
+//     // }
+
+//     this->writeRegister(CANINTF, 0);
+// 	this->writeRegister(CANINTE, 0x01);
+
+// 	this->writeRegister(RXB0SIDH,0x00);
+// 	this->writeRegister(RXB0SIDL,0x60);
+//     return (data_length);
+// }   
+
 uint8_t CAN::readMessage(uint8_t buffer, uint32_t &can_id, uint8_t *data) {
-    //(void) buffer;
     uint8_t address = (buffer == 0) ? RXB0SIDH : RXB1SIDH;
 
-    uint8_t tx_buffer[13] = {CAN_READ, address};
+    // Read all message data in one SPI transaction (more reliable)
+    uint8_t tx_buffer[14] = {CAN_READ, address, 0,0,0,0,0,0,0,0,0,0,0,0};
     uint8_t rx_buffer[14] = {0};
-    this->spiTransfer(tx_buffer, rx_buffer, 13);
+    this->spiTransfer(tx_buffer, rx_buffer, 14);
 
-    uint8_t sidh = this->readRegister(RXB0SIDH);
-    uint8_t sidl = this->readRegister(RXB0SIDL);
-    // uint8_t sidh = rx_buffer[1];
-    // uint8_t sidl = rx_buffer[2];
-    // printf("SIDH: 0x%02X, SIDL: 0x%02X\n", sidh, sidl);
+    // Extract ID from the bulk read data (not separate register reads)
+    uint8_t sidh = rx_buffer[2];  // SIDH from bulk read
+    uint8_t sidl = rx_buffer[3];  // SIDL from bulk read
+    
     if (sidl & 0x08) { // Extended ID frame (IDE bit set)
         can_id = ((sidh << 3) | (sidl >> 5)) & 0x3FF;
-        can_id = (can_id << 18) | ((sidl & 0x03) << 16) | (rx_buffer[3] << 8) | rx_buffer[4];
+        can_id = (can_id << 18) | ((sidl & 0x03) << 16) | (rx_buffer[4] << 8) | rx_buffer[5];
     } else { // Standard ID frame
         can_id = ((sidh << 3) | (sidl >> 5)) & 0x3FF;
     }
 
-    // uint8_t data_length = this->readRegister(RXB0DLC);
-    uint8_t data_length = rx_buffer[5];
+    // Get data length from bulk read
+    uint8_t data_length = rx_buffer[6] & 0x0F;  // DLC from bulk read
+    
+    // Ensure valid data length
+    if (data_length > 8) data_length = 8;
 
-    //Extract data bytes
-    for (int i = 0; i < data_length; i++) {
-        data[i] = rx_buffer[7 + i];
+    // Extract data bytes from bulk read
+    for (int i = 0; i < 8; i++) {
+        data[i] = (i < data_length) ? rx_buffer[7 + i] : 0;
     }
-    //Print the received message
-    // if( data_length == 6 && data[0] == 6)
-    // // {
-        // printf("Received CAN ID: 0x%03X, Length: %d, Data: ", can_id, data_length);
-        // for (int i = 0; i < data_length; i++) {
-        //     printf("0x%02X ", data[i]);
-        // }
-        // printf("\n");
-    // }
 
-    this->writeRegister(CANINTF, 0);
-	this->writeRegister(CANINTE, 0x01);
+    // Clear the receive buffer interrupt flag ONLY for the buffer we just read
+    uint8_t clearFlag = (buffer == 0) ? ~RX0IF : ~RX1IF;
+    uint8_t currentFlags = this->readRegister(CANINTF);
+    this->writeRegister(CANINTF, currentFlags & clearFlag);
 
-	this->writeRegister(RXB0SIDH,0x00);
-	this->writeRegister(RXB0SIDL,0x60);
-    return (data_length);
-}   
+    return data_length;
+}
 
 void CAN::writeMessage(uint32_t addr, uint8_t *tx, size_t length)
 {

@@ -353,6 +353,8 @@
 #include <thread>
 #include <chrono>
 #include <cstdio>
+#include <cstddef> 
+
 
 // MCP2515 SPI instructions
 static constexpr uint8_t INSTR_RESET      = 0xC0;
@@ -509,7 +511,7 @@ bool CAN::send(const CANFrame& txf) {
 }
 
 bool CAN::recv(CANFrame& rxf) {
-    pollfd pfd{ .fd = intFd_, .events = POLLPRI };
+    pollfd pfd{ .fd = intFd_, .events = POLLPRI, .revents = 0 };
     lseek(intFd_, 0, SEEK_SET);
     read(intFd_, nullptr, 1);
     if (poll(&pfd, 1, -1) <= 0) return false;
@@ -532,7 +534,7 @@ void CAN::shutdown() {
 // -----------------------------------------------------------------
 // Methods exposed to Signals::run()
 int CAN::checktheReceive() {
-    pollfd pfd{ .fd = intFd_, .events = POLLPRI };
+    pollfd pfd{ .fd = intFd_, .events = POLLPRI, .revents = 0 };
     lseek(intFd_, 0, SEEK_SET);
     read(intFd_, nullptr, 1);
     return (poll(&pfd, 1, 0) > 0) ? 0 : -1;

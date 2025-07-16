@@ -63,6 +63,7 @@
 #include <cstdint>
 #include <linux/spi/spidev.h>
 #include <cstddef> 
+#include <string> 
 
 struct CANFrame {
     uint32_t id;

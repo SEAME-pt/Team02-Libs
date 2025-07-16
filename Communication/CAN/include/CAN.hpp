@@ -78,6 +78,7 @@ public:
     // Initialize with SPI device path (e.g. "/dev/spidev2.0")
     // Returns true on success, false on any setup failure.
     bool init(const char* spiDev);
+    bool init(const std::string& spiDev) { return init(spiDev.c_str()); } 
 
     // Send a CAN frame (blocking on the SPI transfer)
     bool send(const CANFrame& txf);

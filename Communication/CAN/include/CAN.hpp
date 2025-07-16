@@ -109,10 +109,10 @@ public:
     
     void init(const std::string& CANDevice); // Now expects "can0", "can1", etc.
     
-    uint8_t readMessage(uint8_t buffer, uint32_t &can_id, uint8_t *data);
+    // uint8_t readMessage(uint8_t buffer, uint32_t &can_id, uint8_t *data);
     void writeMessage(uint32_t addr, uint8_t *tx, size_t length);
-    int checktheReceive();
-    bool waitForMessage(int timeout_ms = -1);
+    // int checktheReceive();
+    // bool waitForMessage(int timeout_ms = -1);
 
     int getCanFd() const { return _canFd; } // Getter for _canFd
 

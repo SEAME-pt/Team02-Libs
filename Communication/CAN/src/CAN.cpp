@@ -417,33 +417,33 @@ void CAN::init(const std::string& CANDevice)
     }
 }
 
-uint8_t CAN::readMessage(uint8_t buffer, uint32_t &can_id, uint8_t *data) {
-    (void) buffer; // Buffer parameter not used in socket CAN
+// uint8_t CAN::readMessage(uint8_t buffer, uint32_t &can_id, uint8_t *data) {
+//     (void) buffer; // Buffer parameter not used in socket CAN
     
-    struct can_frame frame;
-    int nbytes = read(this->_canFd, &frame, sizeof(struct can_frame));
+//     struct can_frame frame;
+//     int nbytes = read(this->_canFd, &frame, sizeof(struct can_frame));
     
-    if (nbytes < 0) {
-        return 0; // Error reading
-    }
+//     if (nbytes < 0) {
+//         return 0; // Error reading
+//     }
     
-    if (static_cast<unsigned int> nbytes < sizeof(struct can_frame)) {
-        return 0; // Incomplete frame
-    }
+//     if (static_cast<unsigned int>(nbytes) < sizeof(struct can_frame)) {
+//         return 0; // Incomplete frame
+//     }
     
-    // Extract CAN ID and data
-    can_id = frame.can_id & CAN_SFF_MASK; // Standard frame ID
+//     // Extract CAN ID and data
+//     can_id = frame.can_id & CAN_SFF_MASK; // Standard frame ID
     
-    // Copy data and return length
-    uint8_t data_length = frame.can_dlc;
-    if (data_length > 8) data_length = 8; // Ensure valid length
+//     // Copy data and return length
+//     uint8_t data_length = frame.can_dlc;
+//     if (data_length > 8) data_length = 8; // Ensure valid length
     
-    for (int i = 0; i < 8; i++) {
-        data[i] = (i < data_length) ? frame.data[i] : 0;
-    }
+//     for (int i = 0; i < 8; i++) {
+//         data[i] = (i < data_length) ? frame.data[i] : 0;
+//     }
     
-    return data_length;
-}
+//     return data_length;
+// }
 
 void CAN::writeMessage(uint32_t addr, uint8_t *tx, size_t length)
 {
@@ -470,40 +470,40 @@ void CAN::writeMessage(uint32_t addr, uint8_t *tx, size_t length)
     }
 }
 
-int CAN::checktheReceive() {
-    fd_set readfs;
-    struct timeval timeout;
+// int CAN::checktheReceive() {
+//     fd_set readfs;
+//     struct timeval timeout;
     
-    FD_ZERO(&readfs);
-    FD_SET(this->_canFd, &readfs);
+//     FD_ZERO(&readfs);
+//     FD_SET(this->_canFd, &readfs);
     
-    // Non-blocking check
-    timeout.tv_sec = 0;
-    timeout.tv_usec = 0;
+//     // Non-blocking check
+//     timeout.tv_sec = 0;
+//     timeout.tv_usec = 0;
     
-    int result = select(this->_canFd + 1, &readfs, NULL, NULL, &timeout);
+//     int result = select(this->_canFd + 1, &readfs, NULL, NULL, &timeout);
     
-    if (result > 0 && FD_ISSET(this->_canFd, &readfs)) {
-        return 0; // Data available (using 0 for consistency with original)
-    }
+//     if (result > 0 && FD_ISSET(this->_canFd, &readfs)) {
+//         return 0; // Data available (using 0 for consistency with original)
+//     }
     
-    return -1; // No data available
-}
+//     return -1; // No data available
+// }
 
-bool CAN::waitForMessage(int timeout_ms) {
-    fd_set readfs;
-    struct timeval timeout;
+// bool CAN::waitForMessage(int timeout_ms) {
+//     fd_set readfs;
+//     struct timeval timeout;
     
-    FD_ZERO(&readfs);
-    FD_SET(this->_canFd, &readfs);
+//     FD_ZERO(&readfs);
+//     FD_SET(this->_canFd, &readfs);
     
-    if (timeout_ms >= 0) {
-        timeout.tv_sec = timeout_ms / 1000;
-        timeout.tv_usec = (timeout_ms % 1000) * 1000;
-    }
+//     if (timeout_ms >= 0) {
+//         timeout.tv_sec = timeout_ms / 1000;
+//         timeout.tv_usec = (timeout_ms % 1000) * 1000;
+//     }
     
-    int result = select(this->_canFd + 1, &readfs, NULL, NULL, 
-                       (timeout_ms >= 0) ? &timeout : NULL);
+//     int result = select(this->_canFd + 1, &readfs, NULL, NULL, 
+//                        (timeout_ms >= 0) ? &timeout : NULL);
     
-    return (result > 0 && FD_ISSET(this->_canFd, &readfs));
-}
+//     return (result > 0 && FD_ISSET(this->_canFd, &readfs));
+// }

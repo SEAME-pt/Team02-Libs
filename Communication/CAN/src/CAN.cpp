@@ -341,7 +341,7 @@
 //     }
 // }
 
-#include "CAN.hpp"
+#include "../include/CAN.hpp"
 
 #include <fcntl.h>
 #include <unistd.h>

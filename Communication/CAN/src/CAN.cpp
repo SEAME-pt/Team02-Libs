@@ -366,8 +366,8 @@ static constexpr uint8_t INSTR_LOAD_TX    = 0x40;  // + buffer select
 // Default ctor picks default GPIO pins and bitrate
 CAN::CAN()
  : spiDev_(nullptr)
- , rstGpio_(17)      // RESET → header P17 (BCM17, pin 11)
- , intGpio_(5)       // INT   → header pin 29 (BCM5)
+ , rstGpio_(11)      // RESET → header P17 (BCM17, pin 11)
+ , intGpio_(29)       // INT   → header pin 29 (BCM5)
  , bitrate_(500000)  // default 500 kbps
  , spiFd_(-1)
  , intFd_(-1)

@@ -427,7 +427,7 @@ uint8_t CAN::readMessage(uint8_t buffer, uint32_t &can_id, uint8_t *data) {
         return 0; // Error reading
     }
     
-    if (nbytes < sizeof(struct can_frame)) {
+    if (static_cast<unsigned int> nbytes < sizeof(struct can_frame)) {
         return 0; // Incomplete frame
     }
     

@@ -57,7 +57,7 @@
   
 // };
 
-##ifndef CAN_HPP
+#ifndef CAN_HPP
 #define CAN_HPP
 
 #include <cstdint>

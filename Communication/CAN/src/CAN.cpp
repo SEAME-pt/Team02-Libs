@@ -412,7 +412,7 @@ bool CAN::init(const char* spiDev) {
     // 1) Real-time + mlock
     if (mlockall(MCL_CURRENT | MCL_FUTURE) != 0) {
         perror("mlockall");
-        return false;
+        // return false;
     }
     sched_param sp{ .sched_priority = 80 };
     if (sched_setscheduler(0, SCHED_FIFO, &sp) != 0) {

@@ -89,6 +89,9 @@ public:
     // 'buf' is ignored (we always use RX buffer 0)
     bool readMessage(int buf, uint32_t &can_id, uint8_t data[8]);
 
+    // Write a CAN message with specified ID, data, and length
+    void writeMessage(uint32_t can_id, uint8_t* data, size_t len);
+
     // Close fds
     void shutdown();
 

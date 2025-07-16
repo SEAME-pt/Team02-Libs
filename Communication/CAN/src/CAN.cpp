@@ -550,3 +550,21 @@ bool CAN::readMessage(int /*buf*/,
     memcpy(data, f.data, 8);
     return true;
 }
+
+
+void CAN::writeMessage(uint32_t can_id, uint8_t* data, size_t len) {
+    // Ensure valid data length
+    if (len > 8) len = 8;
+    
+    CANFrame frame;
+    frame.id = can_id;
+    frame.dlc = len;
+    memcpy(frame.data, data, len);
+    
+    // Zero out unused data bytes
+    if (len < 8) {
+        memset(&frame.data[len], 0, 8 - len);
+    }
+    
+    send(frame);
+}

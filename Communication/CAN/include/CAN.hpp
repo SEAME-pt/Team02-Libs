@@ -82,7 +82,6 @@
 #include <sys/ioctl.h>
 #include <unistd.h>
 #include <arpa/inet.h>
-#include "zenoh.hxx"
 
 #ifdef TEST_MODE
   // Declare your custom functions
